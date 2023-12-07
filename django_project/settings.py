@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,6 +12,11 @@ DEBUG = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
+
+if 'CODESPACE_NAME' in os.environ:
+    codespace_name = os.getenv("CODESPACE_NAME")
+    codespace_domain = os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")
+    CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.{codespace_domain}','https://localhost:8000']
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = [
@@ -31,6 +37,8 @@ INSTALLED_APPS = [
     # Local
     "accounts",
     "pages",
+    "quickbooks",
+    "organization",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
